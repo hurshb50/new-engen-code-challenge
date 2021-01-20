@@ -1,1 +1,0 @@
-The font family used in the sketch file is [Open Sans](https://fonts.google.com/specimen/Open+Sans). Feel free to integrate the font however you see fit.
