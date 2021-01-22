@@ -1,24 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import CartPage from "./components/CartPage";
-import { ColorData } from './api/Queries';
-import HomePage from "./components/HomePage";
+import { useCart, useColors } from "./api/Queries";
+import CartPage from './components/CartPage/CartPage';
+import HomePage from './components/HomePage/HomePage';
+import ListView from './components/HomePage/ListView';
 import Nav from "./components/Nav";
 
-export interface CartData {
-  [id: number]: ColorData
-}
+
 
 const App = () => {
-  const [cart, setCart] = useState<CartData>({});
 
-  const updateCart = (color: ColorData) => {
-    if (!cart[color.id]) setCart((prevCart: CartData) => ({ ...prevCart, [color.id]: color }));
-    else {
-      const { [color.id]: removedColor, ...newCart }: CartData = cart;
-      setCart(newCart);
-    }
-  }
+  const [colorOffset, incOffset, colorDataList, loading, error] = useColors();
+  const [cart, addToCart, updateCart, removeFromCart, clearCart] = useCart();
 
   return (
     <Router>
@@ -26,15 +19,35 @@ const App = () => {
 
       <Switch>
         <Route exact path="/">
-          <HomePage cart={cart} updateCart={updateCart} />
+          <HomePage colorOffset={colorOffset} incOffset={incOffset} loading={loading}>
+            {(colorDataList.length > 0 ? (<ListView cart={cart} colorDataList={colorDataList} updateCart={updateCart} />) : null)}
+          </HomePage>
         </Route>
 
         <Route path="/cart">
-          <CartPage cart={cart} />
+          <CartPage cart={cart} clearCart={clearCart} removeFromCart={removeFromCart} />
+        </Route>
+      </Switch>
+
+    </Router>
+  )
+  /* 
+
+  return (
+    <Router>
+      <Nav cartSize={Object.keys(cart).length} />
+
+      <Switch>
+        <Route exact path="/">
+          <HomePage cart={cart} updateCart={updateCart} {...colorListObj} />
+        </Route>
+
+        <Route path="/cart">
+          <CartPage cart={cart} updateCart={updateCart} clearCart={clearCart} />
         </Route>
       </Switch>
     </Router>
-  )
+  ) */
 }
 
 export default App;
