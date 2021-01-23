@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
+import { Color } from '../../../hooks/dataTypes';
 import { ColorBlock } from '../../GeneralComponents';
-import { ColorData } from '../../../hooks/useColorList';
 import Trash from "../../../assets/TrashIcon.svg";
 
 const RemovableColorBlock = styled(ColorBlock)`
@@ -23,13 +23,12 @@ const TrashIcon = styled.img`
   margin: 0.5rem;
 `;
 
-
-interface Props {
-  color: ColorData;
-  removeFromCart: (color: ColorData) => void;
+interface ComponentProps {
+  color: Color;
+  removeFromCart: (color: Color) => void;
 }
 
-const CartPaletteItem = (props: Props) => {
+const CartPaletteItem = (props: ComponentProps) => {
   const { color, removeFromCart } = props;
   const { hex } = color;
 

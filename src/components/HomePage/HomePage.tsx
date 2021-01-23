@@ -2,40 +2,39 @@ import React, { FunctionComponent, useState } from 'react';
 import styled from "styled-components";
 import { Button, Input } from '../GeneralComponents';
 
-const LoadContainer = styled.div`
+const LoadMoreContainer = styled.div`
   display:flex;
   justify-content: center;
 `;
 
-const LoadInput = styled(Input)`
-  width: 10rem;
-`;
-
-interface Props {
-  colorOffset: number;
-  loadMoreColors: (quantity: number) => void;
+interface ComponentProps {
   isDataLoading: boolean;
+  loadMoreColors: (quantity: number) => void;
 }
 
-const HomePage: FunctionComponent<Props> = (props) => {
+const HomePage: FunctionComponent<ComponentProps> = (props) => {
   const [quantity, setQuantity] = useState(0);
 
   const loadMoreColors = () => {
-    if (quantity > 0 && !Number.isNaN(quantity)) props.loadMoreColors(quantity);
+    if (!Number.isNaN(quantity) && quantity > 0 && quantity <= 100)
+      props.loadMoreColors(quantity);
   }
 
   return (
     <>
       {props.children}
-      <LoadContainer>
-        <LoadInput type="number" value={quantity} onChange={({ currentTarget }) => setQuantity(parseInt(currentTarget.value))} />
-        <Button
-          disabled={props.isDataLoading}
-          onClick={loadMoreColors}
-        >
+
+      <LoadMoreContainer>
+        <Input
+          type="number"
+          value={quantity}
+          onChange={({ currentTarget }) => setQuantity(parseInt(currentTarget.value))}
+          width={10}
+        />
+        <Button disabled={props.isDataLoading} onClick={loadMoreColors} display="block">
           Load More
         </Button>
-      </LoadContainer>
+      </LoadMoreContainer>
     </>
   );
 }

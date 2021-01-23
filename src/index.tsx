@@ -16,11 +16,6 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Source Sans Pro', sans-serif;
     background-color: #EFEFEF;
   }
-
-  html ,body, #root {
-    height: 100%;
-    overflow: hidden;
-  }
 `;
 
 ReactDOM.render(

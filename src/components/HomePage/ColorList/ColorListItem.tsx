@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
-import { ColorData } from '../../../hooks/useColorList';
+import { Color } from '../../../hooks/dataTypes';
 import { ColorBlock } from '../../GeneralComponents';
 
 const SelectableColorBlock = styled(ColorBlock) <{ selected: boolean }>`
@@ -8,22 +8,21 @@ const SelectableColorBlock = styled(ColorBlock) <{ selected: boolean }>`
 `;
 
 interface Props {
-  color: ColorData;
+  color: Color;
   selected: boolean;
-  updateCart: (color: ColorData) => void;
+  updateCart: (color: Color) => void;
 }
 
 const ColorListItem = (props: Props) => {
-  const { color, selected, updateCart } = props;
-  const updateItem = () => updateCart(color);
+  const updateItem = () => props.updateCart(props.color);
 
   return (
     <SelectableColorBlock
-      backgroundColor={color.hex}
+      backgroundColor={props.color.hex}
       onClick={updateItem}
-      selected={selected}
+      selected={props.selected}
     >
-      #{color.hex}
+      #{props.color.hex}
     </SelectableColorBlock>
   );
 };

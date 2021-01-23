@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CartPage from './components/CartPage/CartPage';
-import HomePage from './components/HomePage/HomePage';
 import ColorList from './components/HomePage/ColorList/ColorList';
+import HomePage from './components/HomePage/HomePage';
 import Nav from "./components/Nav";
 import useCart from './hooks/useCart';
 import useColorList from './hooks/useColorList';
 
 const App = () => {
-  const { colorOffset, loadMoreColors, colorDataList, isDataLoading, dataError } = useColorList();
+  const { colorList, loadMoreColors, isDataLoading, dataError } = useColorList();
   const { cart, updateCart, removeFromCart, clearCart } = useCart();
 
   if (dataError) console.log(dataError);
@@ -19,9 +19,9 @@ const App = () => {
 
       <Switch>
         <Route exact path="/">
-          <HomePage colorOffset={colorOffset} loadMoreColors={loadMoreColors} isDataLoading={isDataLoading}>
-            {(colorDataList.length > 0 ? (
-              <ColorList cart={cart} colorDataList={colorDataList} updateCart={updateCart} />
+          <HomePage loadMoreColors={loadMoreColors} isDataLoading={isDataLoading}>
+            {(colorList.length > 0 ? (
+              <ColorList cart={cart} colorList={colorList} updateCart={updateCart} />
             ) : null)}
           </HomePage>
         </Route>

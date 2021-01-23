@@ -1,21 +1,20 @@
 import React from 'react';
-import { Cart } from '../../../hooks/useCart';
-import { ColorData } from '../../../hooks/useColorList';
+import { Cart, Color } from '../../../hooks/dataTypes';
 import { ColorsContainer } from '../../GeneralComponents';
 import ColorListItem from './ColorListItem';
 
-interface Props {
+interface ComponentProps {
   cart: Cart;
-  colorDataList: ColorData[];
-  updateCart: (color: ColorData) => void;
+  colorList: Color[];
+  updateCart: (color: Color) => void;
 }
 
-const ColorList = (props: Props) => {
-  const { cart, colorDataList, updateCart } = props;
+const ColorList = (props: ComponentProps) => {
+  const { cart, colorList, updateCart } = props;
 
   return (
     <ColorsContainer>
-      {colorDataList.map((color: ColorData) => {
+      {colorList.map((color: Color) => {
         const selected = (cart[color.id] ? true : false);
         return (
           <ColorListItem

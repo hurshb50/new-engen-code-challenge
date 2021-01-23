@@ -1,47 +1,34 @@
 import { useEffect, useState } from "react";
-import { ColorData } from "./useColorList";
+import { Cart, Color } from "./dataTypes";
 
-
-interface Cart {
-  [id: number]: ColorData
-}
-
-interface CartProps {
+interface useCartReturnProps {
   cart: Cart;
-  addToCart: (color: ColorData) => void;
-  updateCart: (color: ColorData) => void;
-  removeFromCart: (color: ColorData) => void;
+  addToCart: (color: Color) => void;
+  updateCart: (color: Color) => void;
+  removeFromCart: (color: Color) => void;
   clearCart: () => void;
 }
 
-const getStoredCart = () => {
-  const storedCart = localStorage.getItem('cart');
-  if (storedCart) return JSON.parse(storedCart);
-  else return {};
-}
-
-const setStoredCart = (newCart: Cart) => localStorage.setItem('cart', JSON.stringify(newCart));
-
-const useCart = (): CartProps => {
+const useCart = (): useCartReturnProps => {
   const [cart, setCart] = useState<Cart>({});
 
   useEffect(() => {
     setCart(getStoredCart());
   }, []);
 
-  const addToCart = (color: ColorData) => {
+  const addToCart = (color: Color) => {
     const newCart = { ...cart, [color.id]: color };
     setStoredCart(newCart);
     setCart(newCart);
   };
-  const removeFromCart = (color: ColorData) => {
+  const removeFromCart = (color: Color) => {
     //separate color from others in the cart
     const { [color.id]: removedColor, ...newCart } = cart;
     setStoredCart(newCart);
     setCart(newCart);
   }
 
-  const updateCart = (color: ColorData) => {
+  const updateCart = (color: Color) => {
     // if color is not in cart yet, add it
     if (!cart[color.id]) addToCart(color);
     //else remove it
@@ -57,4 +44,13 @@ const useCart = (): CartProps => {
 }
 
 export default useCart;
-export type { Cart };
+
+// get/set cart from/to localStorage
+
+const getStoredCart = () => {
+  const storedCart = localStorage.getItem('cart');
+  if (storedCart) return JSON.parse(storedCart);
+  else return {};
+}
+
+const setStoredCart = (newCart: Cart) => localStorage.setItem('cart', JSON.stringify(newCart));
