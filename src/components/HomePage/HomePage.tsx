@@ -1,34 +1,43 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import styled from "styled-components";
-import Button from "../Button";
+import { Button, Input } from '../GeneralComponents';
 
-const Container = styled.div`
+const LoadContainer = styled.div`
   display:flex;
-  flex-direction:column;
+  justify-content: center;
+`;
+
+const LoadInput = styled(Input)`
+  width: 10rem;
 `;
 
 interface Props {
   colorOffset: number;
-  incOffset: () => void;
-  loading: boolean;
+  loadMoreColors: (quantity: number) => void;
+  isDataLoading: boolean;
 }
 
 const HomePage: FunctionComponent<Props> = (props) => {
-  const { colorOffset, incOffset, loading } = props;
+  const [quantity, setQuantity] = useState(0);
+
+  const loadMoreColors = () => {
+    if (quantity > 0 && !Number.isNaN(quantity)) props.loadMoreColors(quantity);
+  }
 
   return (
-    <Container>
+    <>
       {props.children}
-
-      <Button
-        alignment="center"
-        onClick={incOffset}
-        disabled={(colorOffset >= 100 || loading ? true : false)}
-      >
-        Load More
-      </Button>
-    </Container>
+      <LoadContainer>
+        <LoadInput type="number" value={quantity} onChange={({ currentTarget }) => setQuantity(parseInt(currentTarget.value))} />
+        <Button
+          disabled={props.isDataLoading}
+          onClick={loadMoreColors}
+        >
+          Load More
+        </Button>
+      </LoadContainer>
+    </>
   );
-};
+}
 
 export default HomePage;

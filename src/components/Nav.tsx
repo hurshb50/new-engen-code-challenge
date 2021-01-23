@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Logo from "../assets/NewEngen-Logo.svg";
 import Cart from "../assets/CartIcon.svg";
 
-const NavContainer = styled.header`
+const Container = styled.header`
   height: 6rem;
   width: 100%;
 
@@ -34,19 +34,20 @@ const CartBubble = styled.div`
   top: 0;
   right: 0;
   
-  background-color:#F13757;
   height: 2.2rem;
   width:2.2rem;
+
   border-radius: 2.2rem;
 
-  display:flex;
-  justify-content:center;
-  align-items:center;
-
+  background-color:#F13757;
 
   font-size: 1.2rem;
   font-weight: 600;
   color: #FFFFFF;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
 `;
 
 interface Props {
@@ -56,7 +57,7 @@ interface Props {
 
 const Nav = ({ cartSize }: Props) => {
   return (
-    <NavContainer>
+    <Container>
       <Link to="/">
         <LogoImg src={Logo} alt="" />
       </Link>
@@ -66,7 +67,7 @@ const Nav = ({ cartSize }: Props) => {
           <CartBubble>{cartSize}</CartBubble>
         </CartImgContainer>
       </Link>
-    </NavContainer>
+    </Container>
   );
 };
 

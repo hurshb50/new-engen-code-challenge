@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createGlobalStyle } from "styled-components";
 import App from './App';
-import Client from './api/Client';
+import Client from './Client';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -15,6 +15,11 @@ const GlobalStyle = createGlobalStyle`
     font-size: 10px;
     font-family: 'Source Sans Pro', sans-serif;
     background-color: #EFEFEF;
+  }
+
+  html ,body, #root {
+    height: 100%;
+    overflow: hidden;
   }
 `;
 

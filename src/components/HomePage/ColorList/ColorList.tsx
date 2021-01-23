@@ -1,13 +1,8 @@
 import React from 'react';
-import styled from "styled-components";
-import { Cart, ColorData } from '../../api/Queries';
-import ListItem from './ListItem';
-
-const Container = styled.div`
-  width: 100%;
-  display:flex;
-  flex-wrap: wrap;
-`;
+import { Cart } from '../../../hooks/useCart';
+import { ColorData } from '../../../hooks/useColorList';
+import { ColorsContainer } from '../../GeneralComponents';
+import ColorListItem from './ColorListItem';
 
 interface Props {
   cart: Cart;
@@ -15,14 +10,15 @@ interface Props {
   updateCart: (color: ColorData) => void;
 }
 
-const ListView = (props: Props) => {
+const ColorList = (props: Props) => {
   const { cart, colorDataList, updateCart } = props;
+
   return (
-    <Container>
+    <ColorsContainer>
       {colorDataList.map((color: ColorData) => {
         const selected = (cart[color.id] ? true : false);
         return (
-          <ListItem
+          <ColorListItem
             key={color.id}
             color={color}
             selected={selected}
@@ -30,8 +26,8 @@ const ListView = (props: Props) => {
           />
         );
       })}
-    </Container>
+    </ColorsContainer>
   );
 };
 
-export default ListView;
+export default ColorList;
