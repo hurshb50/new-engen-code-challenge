@@ -5,6 +5,7 @@ import { ColorBlock } from '../../GeneralComponents';
 
 const SelectableColorBlock = styled(ColorBlock) <{ selected: boolean }>`
   border: ${({ selected }) => (selected ? "0.5rem solid rgba(0,0,0,0.5)" : "0")};
+  cursor: pointer;
 `;
 
 interface Props {

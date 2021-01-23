@@ -6,6 +6,7 @@ import Trash from "../../../assets/TrashIcon.svg";
 
 const RemovableColorBlock = styled(ColorBlock)`
   position: relative;
+  cursor: pointer;
   
   &:hover {
     & img {
