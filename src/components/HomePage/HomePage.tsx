@@ -13,11 +13,17 @@ interface ComponentProps {
 }
 
 const HomePage: FunctionComponent<ComponentProps> = (props) => {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState("");
 
   const loadMoreColors = () => {
-    if (!Number.isNaN(quantity) && quantity > 0 && quantity <= 100)
-      props.loadMoreColors(quantity);
+    const parsedQuantity = (Number.isNaN(parseInt(quantity)) ? 0 : parseInt(quantity));
+    if (parsedQuantity > 0 && parsedQuantity <= 100) props.loadMoreColors(parsedQuantity);
+  }
+
+  const onQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    if (!Number.isNaN(parseInt(value))) setQuantity(value);
+    else setQuantity("");
   }
 
   return (
@@ -26,9 +32,9 @@ const HomePage: FunctionComponent<ComponentProps> = (props) => {
 
       <LoadMoreContainer>
         <Input
-          type="number"
+          type="text"
           value={quantity}
-          onChange={({ currentTarget }) => setQuantity(parseInt(currentTarget.value))}
+          onChange={onQuantityChange}
           width={10}
         />
         <Button disabled={props.isDataLoading} onClick={loadMoreColors} display="block">
